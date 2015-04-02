@@ -60,7 +60,7 @@ like Youtube, Flickr, Vimeo, Slideshare, Scribd, Instagram, SoundCloud, Twitter
 and many more} on its own line, the link is automatically converted into an
 embed.  No need to fumble around and search for embed code.
 
-Example:  \url{https://www.instamojo.com/instamojo/integration-documentatdaion/}
+Example:  \url{https://www.instamojo.com/instamojo/integration-documentation/}
 \item[Custom fields] These allow you to specify extra fields of data that you
 would like your user to enter during the checkout process. The default fields
 available in a payment link are the name, the email address and the phone
