@@ -1,0 +1,8 @@
+.DS_Store
+.dropbox
+*.pdf
+*.aux
+*.log
+*.out
+*.toc
+*.log
