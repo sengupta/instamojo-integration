@@ -1,0 +1,651 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue,
+            urlcolor=blue]{hyperref}
+\usepackage{graphics}
+\usepackage[normalem]{ulem}
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\ifpdf
+\pdfinfo{
+         /Title (Integrating Instamojo)
+         /CreationDate (D:20141111183000)
+         /Subject (Instamojo)
+    }
+\fi
+\title{Integrating Instamojo}
+\hyphenation{Instamojo}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\newpage
+\section{Introduction}
+\paragraph{}
+This document guides you through the process of creating a tighter integration
+between your web-application and Instamojo.
+
+Should you have any questions about what the most appropriate workflow is for
+you or for your customers, please feel free to call us at
+\href{tel:+912240044008}{+91-22-4004-4008} or email us at
+\href{mailto:support@instamojo.com}{support@instamojo.com}.
+
+% TODO:
+%
+% 1. Add link to developer mailing list.
+% 2. Add link to document source so people are able to stay up to date with the
+%    latest changes.
+% 3. Add a change log (or link change log to document source's Github log).
+% 4. Add document version numbers/tags in the document.
+\section{Basic features}
+
+\paragraph{}
+There are several ways for you and your customers to interact with
+\mbox{Instamojo}. The simplest way is for you to create and share an Instamojo
+link with your customers.
+
+\paragraph{}
+Instamojo links support a host of very powerful features. \uline{Please review
+and take advantage of these features before considering our more advanced
+features}, described in the next section.
+
+\begin{description}
+\item[Smart descriptions] The description section of your payment link supports
+a subset\footnote{Not all features of Markdown are supported. In particularly,
+any HTML or Javascript added will be removed} of Markdown\footnote{Syntax:
+\url{http://daringfireball.net/projects/markdown/syntax}}, that allows you to
+add beautiful formatting to the text you add. Also, if you add a link to media
+content from selected popular rich media sites\footnote{This includes services
+like Youtube, Flickr, Vimeo, Slideshare, Scribd, Instagram, SoundCloud, Twitter
+and many more} on its own line, the link is automatically converted into an
+embed.  No need to fumble around and search for embed code.
+
+Example:  \url{https://www.instamojo.com/instamojo/integration-documentation/}
+\item[Custom fields] These allow you to specify extra fields of data that you
+would like your user to enter during the checkout process. The default fields
+available in a payment link are the name, the email address and the phone
+number of the buyer. You may request for more information, such as the company
+name, age, etc. according to your needs.
+
+Example: \url{https://www.instamojo.com/demo/demo-custom-fields/}
+\item[Discount codes] These allow you to provide some of your users with
+discount codes. You have the option to render a discount code box on your
+payment link where users can enter their code manually (Eg:
+\url{https://www.instamojo.com/demo/demo-payment-features/}) or,
+you can share a link with a discount directly with your users (Eg:
+\url{https://www.instamojo.com/demo/demo-payment-features/?discount=off15}).
+\item[Variants] If you have multiple variants/tiers/options/colours of the same
+product or service that you're selling, you don't need to create individual
+links for each of them. You can add these variants to the same Instamojo link.
+You can specify limits to the quantity of each variant being sold, if you
+choose.
+
+Example: \url{https://www.instamojo.com/demo/demo-payment-features/}
+\item[Custom notes] You can add a custom note to a payment link. This note is
+only shown to a user at the end of a successful purchase. This is displayed in
+the post-purchase success page and in the email that is sent to the buyer after
+a purchase. You can include a thank-you message, instructions to get started,
+any keys or passwords required, etc.
+
+Example:  \url{https://www.instamojo.com/instamojo/integration-documentation/}
+\item[Quantity limits] You can restrict the number of items that can be
+purchased for a given link.
+\item[Socialpay] If you'd like to give something away for free, you can accept
+social payments in the form of a Tweet or Facebook post.
+
+Example:  \url{https://www.instamojo.com/instamojo/integration-documentation/}
+\item[Digital downloads] If you'd like to sell your music, e-books, or other
+digital content, you can take advantage of our \emph{Digital Goods} links. You
+can upload the file to our servers and we take care of hosting, bandwidth, user
+downloads, future retrievals, etc.
+
+Example:  \url{https://www.instamojo.com/instamojo/integration-documentation/}
+\item[Affiliate system] We have an affiliate system in place where you can
+invite your affiliates to help you increase your sales. We'll handle their
+payouts and KYC procedures so you don't have to.
+\end{description}
+
+We offer all of the above features and many more that are being added every
+day. If you have any questions about whether we can support your use cases or
+workflow, or if you're having difficulties finding any of the above features in
+your account, please do not hesitate to reach out to the Instamojo team.
+
+
+\newpage
+\section{Advanced features}
+If the features in the previous section do not meet your needs, or if you need
+a tighter integration between your website and Instamojo, we provide several
+integration options:
+
+\begin{description}
+
+\item[Before a payment]
+Before a customer reaches an Instamojo page, you can specify the behaviour of
+the Instamojo page through URL query-string parameters. 
+\begin{itemize}
+\item \emph{Pre-fill} any or all of the fields in the payment form.
+\item Make any of the fields \emph{read-only} and \emph{tamper-proof}.
+\item If it isn't a fixed price payment, pass the \emph{amount} at the time of
+the payment.
+\item Send us any \emph{custom data} (such as an order ID or a username) that
+you'd like us to \emph{send back} after the payment.
+\item Specify the \emph{layout} of the Instamojo page.
+\end{itemize}
+
+\item[After a payment]
+After a payment successfully ends, there are several ways in which you can
+choose to be notified:
+
+\begin{itemize}
+\item We can \emph{redirect} the customer to a URL that you specify.
+\item You can query our \emph{API} to get details about a specific transaction
+(read below).
+\item We can send you a \emph{webhook notification} to your server.
+\end{itemize}
+
+\item[Instamojo APIs]
+We have the following APIs that permit programmatic access:
+
+\begin{itemize}
+\item \emph{Payment API}: Get details about a specific payment or all your payments
+programmatically.
+\item \emph{Link API}: View, create or edit links in your account programmatically.
+\end{itemize}
+
+\end{description}
+
+\newpage
+\section{Before a payment}
+
+There are several ways in which you can customize a payment link using URL
+query-string parameters. Please do not forget to \uline{URL encode} any
+parameters you send.
+
+
+\subsection{Pre-filling the payment form}
+Every Instamojo link contains a payment form that will contain, at the very
+least, fields to ask for the buyer's \emph{name}, \emph{email address} and
+\emph{phone number}. If you have these details before they arrive on this page,
+you can send the values across so that they don't have to fill it up again.
+
+\begin{tabular}{| l | l | r |}
+\hline
+Field & Key & Character limit \\ \hline \hline
+Name & \verb+data_name+ & 20 \\
+Email address & \verb+data_email+ & 75 \\
+Phone number & \verb+data_phone+ & 20 \\ \hline
+\end{tabular}
+
+\begin{flushleft}
+Example:
+
+\url{https://www.instamojo.com/demo/demo-offer/?data_name=Aditya+Sengupta&data_email=aditya@instamojo.com&data_phone=9821485060}
+\end{flushleft}
+
+\subsection{Passing the amount at the time of the payment}
+By default, links on Instamojo have a fixed price. If you would like to pass
+the amount at the time the transaction is taking place, you'll need to first
+edit the link and make the following changes:
+
+\begin{enumerate}
+\item Ensure the price is greater than 0 (say Rs. 10).
+\item Enable the \emph{``pay what you want"} option.
+\end{enumerate}
+
+\begin{flushleft}
+Once you have done this, you can pass the price using the following URL query parameter:
+\end{flushleft}
+
+\begin{tabular}{| l | l | r |}
+\hline
+Field & Key & Character limit \\ \hline \hline
+Amount & \verb+data_amount+ & Any number up to 2 decimal places \\ \hline
+\end{tabular}
+
+\begin{flushleft}
+Example:
+
+\url{https://www.instamojo.com/demo/demo-offer/?data_amount=123.45}
+\end{flushleft}
+
+\subsection{Making fields read-only}
+
+\textbf{Note}: This section only describes how to specify read-only fields.
+Fields specified as read-only will have the HTML \texttt{readonly} attribute
+added to them. A savvy user can still edit the URL or the HTML and change the
+values being sent. \uline{Please read section \ref{subsec:tamper_proof} to find
+out how to make a read-only field tamper proof.}
+
+You can make any of the payment form fields read-only by passing the name of
+that field as a value to the key \verb+data_readonly+. If there are multiple
+fields you would like to make read-only, simply repeat this for every field (in
+the same way you would use an HTML select-multiple field\footnote{HTML
+select-multiple field:
+\url{http://www.w3schools.com/tags/att_select_multiple.asp}}).
+
+\begin{flushleft}
+Example:
+
+\url{https://www.instamojo.com/demo/demo-offer/?data_name=Aditya+Sengupta&data_email=aditya@instamojo.com&data_readonly=data_name&data_readonly=data_email}
+\end{flushleft}
+
+\subsection{Making fields tamper-proof}
+\label{subsec:tamper_proof}
+To ensure that your read-only fields cannot be tampered with, you can sign your links using the procedure below.
+
+\textbf{Note 1}: To do this, you'll need the \textbf{salt} for your Instamojo
+account. You can get this by logging into your Instamojo account and visiting
+the \href{https://www.instamojo.com/developers}{Developers page}.
+
+\textbf{Note 2}: \uline{You will need to contact the Instamojo team to enable
+permanent tamper-proofing for your link}. If you do not, anyone can remove the
+URL query-string parameters and be able to make a payment with a value that is
+less than what you expect. Once permanent tamper-proofing is enabled, we will refuse to accept payments on links that are not signed.
+
+For the purpose of this example, we assume you're trying to make the following link tamper-proof:
+
+\begin{flushleft}
+\url{https://www.instamojo.com/demo/demo-offer/?data_name=Aditya+Sengupta&data_email=aditya@instamojo.com&data_phone=9821485060&data_amount=123.45&data_readonly=data_name&data_readonly=data_email&data_readonly=data_phone&data_readonly=data_amount}
+\end{flushleft}
+
+\begin{enumerate}
+\item Arrange the \textbf{read-only} fields in the alphabetical order of their
+keys. If you have any keys with upper-case letters, convert them to lower-case
+letters first.
+
+In this example, you would get the following order:
+\begin{enumerate}
+\item \verb+data_amount+
+\item \verb+data_email+
+\item \verb+data_name+
+\item \verb+data_phone+
+\end{enumerate}
+
+\item Using the order above, replace the keys by their respective values.
+
+In this example, you would get the values below in the following order:
+\begin{enumerate}
+\item \verb+123.45+
+\item \verb+aditya@instamojo.com+
+\item \verb+Aditya Sengupta+
+\item \verb+9821485060+
+\end{enumerate}
+\item Concatenate the above values into a single string, with each value separated by a pipe character, i.e, the $\vert$ character.
+
+Using the above example, you get the following string:
+\begin{verbatim}
+123.45|aditya@instamojo.com|Aditya Sengupta|9821485060
+\end{verbatim}
+\item Use the above string as the message for the HMAC-SHA1
+algorithm\footnote{Hash-based Message Authentication Code:
+\url{http://en.wikipedia.org/wiki/Hash-based_message_authentication_code}} and
+the salt for your Instamojo account as the salt for the algorithm. The output
+of this will be the signature we need.
+
+For example, if your salt is ``abcde", the signature you would generate using the string from the previous step as the message is:
+\begin{verbatim}
+6f905be9811990707f9d833da8e93bfebb23abbc
+\end{verbatim}
+\end{enumerate}
+
+% Add point about URL encoding/escaping the querystring
+
+Once you have the signature using the above procedure, you add it as the value of the \verb+data_sign+ key in the URL. The URL would then be:
+
+\begin{flushleft}
+\url{https://www.instamojo.com/demo/demo-offer/?data_readonly=data_name&data_readonly=data_email&data_readonly=data_phone&data_readonly=data_amount&data_readonly=data_&data_sign=6f905be9811990707f9d833da8e93bfebb23abbc&data_email=aditya@instamojo.com&data_amount=123.45&data_name=Aditya+Sengupta&data_phone=9821485060}
+\end{flushleft}
+
+Don't forget to URL encode the query-string parameters!
+
+\subsection{Passing custom data}
+You may want to pass custom data to Instamojo at the beginning of a payment
+that you would like to retrieve at the end of a payment, such as an order ID,
+or a username of someone on your application.
+\begin{enumerate}
+\item Open your Instamojo dashboard and search for the link you would like to
+add custom data to. (Don't click the link).
+\item Below the link, you'll find the option to add and edit \emph{``Custom
+Fields"}. Click on this.
+\item Add the approprate fields. You can add as many as you like.
+\item For each field that you would like to pass the data for in the URL,
+you'll need the identifier of that field. You can find the identifier by using
+the mouse to hover over the field name you've just created and the identifier
+will appear. It will look like \verb+Field_<number>+, where \verb+<number>+
+will be a number. Note down the identifiers for each custom field you define.
+\item The data key for the query-string parameter will be generated by
+prefacing the identifier with \verb+data_+. For example, if the identifier is
+\verb+Field_12345+, the data key would be \verb+data_Field_12345+. Note the
+placement of the underscores and the case sensitivity.
+\item You can add your custom data using the data keys above. Here is an example:
+
+\url{https://www.instamojo.com/demo/demo-custom-fields/?data_Field_70240=27&data_Field_70241=Instamojo&intent=buy}
+
+\end{enumerate}
+
+Note that custom data fields can be made read-only and signed using the same
+procedure described in section \ref{subsec:tamper_proof}.
+
+\subsection{Hiding custom data}
+You may want to hide the custom data (such as order IDs or internal usernames)
+that is displayed in the payment form, especially if it is not of immediate
+obvious use to the buyer. To do this:
+
+\begin{enumerate}
+\item Add the key \verb+data_hidden+ as a query-string parameter to the URL.
+\item Use the data key of the custom field as the value of the \verb+data_hidden+ parameter.
+\item Repeat for all the custom fields you want to hide.
+\end{enumerate}
+
+Example: \url{https://www.instamojo.com/demo/demo-custom-fields/?data_Field_70240=27&data_Field_70241=Instamojo&intent=buy&data_hidden=data_Field_70240&data_hidden=data_Field_70241}
+
+\subsection{Specifying the layout}
+There are four layouts that are provided by Instamojo.
+\begin{description}
+\item[Default layout]
+
+This is the default layout you see when you open an Instamojo link.
+\item[Payment button]
+
+You can make the Instamojo payment link appear as part of your web-application
+by using our payment button. You can customize your payment button and generate
+the embed code by searching for your Instamojo link in your dashboard and
+clicking on the \emph{``Payment button"} option below your link.
+
+The \emph{``Redirect"} style will simply open the Instamojo link in a new tab
+and allow the payment to take place there.
+
+The \emph{``Remote checkout"} style will open a modal overlay on your
+web-application and allow the payment process to seamlessly integrate with your
+site.
+
+\item[Form open]
+
+If you're pre-filling the payment form, you may want to keep the payment form
+open by default, so the buyer is saved an extra click of having to open the
+form. You can do this by adding the query-string parameter, \verb+intent=buy+
+to your Instamojo link.
+
+Example: \url{https://www.instamojo.com/demo/demo-offer/?intent=buy}
+\item[Minimal link]
+
+If you want to embed the Instamojo link in an iframe, you may want a minimal
+version of the Instamojo page to appear. To do this, simply add the
+query-string parameter, \verb+embed=form+ to your Instamojo link and you'll get
+a skinned version of the Instamojo link that consists only of the payment
+forms.
+
+Example: \url{https://www.instamojo.com/demo/demo-offer/?embed=form}
+\end{description}
+
+\subsection{Error codes}
+
+If you've made an error with one of the query parameters, you may see one or more of the following error codes:
+
+\begin{tabular}{| l | l | r |}
+\hline
+Error code & Error description \\ \hline
+QF1 & Name is not valid \\
+QF2 & Email is not valid \\
+QF3 & Phone is not valid \\
+QF4 & Amount is not valid \\
+QF5 & Readonly fields are not valid \\
+QF6 & Hidden fields are not valid \\
+QF7 & Signature is not valid \\
+QF10 & Custom field is not valid \\
+QF11 & Signature not specified for link that requires signature \\
+QF12 & Readonly fields not specified for link that requires signature \\
+QF13 & Data to sign invalid for link that requires signature \\
+QF14 & Data to sign not specified for link that requires signature \\
+QF15 & Signature not valid \\
+\hline
+\end{tabular}
+
+\newpage
+\section{After a payment}
+
+There are several ways in which you can process a successful transaction.
+
+\subsection{Redirect}
+\label{subsec:redirect}
+
+At the end of each transaction on a given link, the user can be redirected to a
+link that you specify. You can specify this link in the \emph{``Advanced
+settings"} section while creating or editing a link. While we redirect the
+user, we also add the payment ID as a query parameter (using the key
+\verb+payment_id+) to your redirect link.
+
+You can use the payment ID to query our Payment API (described in section
+\ref{subsec:payment_api} on page \pageref{subsec:payment_api}) to verify the
+status of the payment and retrieve other details, such as the amount, the
+custom data, the buyer's details, etc. More on this in the next section.
+
+\subsection{Payment API}
+
+The payment API allows you to do the following:
+
+\begin{enumerate}
+\item Retrieve a list of payments associated with your Instamojo account.
+\item Given a payment ID, retrieve the data associated with a specific payment.
+\end{enumerate}
+
+The details of this are provided in section \ref{subsec:payment_api} on
+page \pageref{subsec:payment_api}.
+
+\subsection{Webhook notification}
+
+At the end of a successful payment, we can initiate a server to server POST
+request that sends you all the data associated with that payment. You can
+specify the URL to which we send the webhook request in the \emph{``Advanced
+settings"} section while creating or editing a link. We send the following
+data with each webhook request:
+
+\begin{flushleft}
+The following parameters are always sent:
+\end{flushleft}
+
+\begin{tabular}{| l | l | r |}
+\hline
+Variable & Key \\ \hline
+Payment ID & \verb+payment_id+ \\
+Status & \verb+status+ \\
+Slug of the link & \verb+offer_slug+ \\
+Title of the link & \verb+offer_title+ \\
+Buyer's email address & \verb+buyer+ \\
+Buyer's name & \verb+buyer_name+ \\
+Buyer's phone number & \verb+buyer_phone+ \\
+Currency & \verb+currency+ \\
+Quantity of items purchased & \verb+quantity+ \\
+Price of each item & \verb+unit_price+ \\
+Total amount paid & \verb+amount+ \\
+Fees charged by Instamojo & \verb+fees+ \\
+Message authentication code & \verb+mac+ \\
+\hline
+\end{tabular}
+
+\begin{flushleft}
+The following parameters are only sent when applicable:
+\end{flushleft}
+
+\begin{tabular}{| l | l | r |}
+\hline
+Variable & Key \\ \hline
+Shipping address specified & \verb+shipping_address+ \\
+Shipping city & \verb+shipping_city+ \\
+Shipping state & \verb+shipping_state+ \\
+Shipping postal code & \verb+shipping_zip+ \\
+Shipping country & \verb+shipping_country+ \\
+Discount code used & \verb+discount_code+ \\
+Amount discounted & \verb+discount_amount_off+ \\
+Variant options specified & \verb+variants+ \\
+Custom fields (JSON blob) & \verb+custom_fields+ \\
+\hline
+\end{tabular}
+
+\subsubsection{How is the webhook different from the redirect?}
+
+A webhook notification is an HTTP \emph{POST} request that is made from our
+server. A redirect is an HTTP \emph{GET} request that is made from the buyer's
+web browser.
+
+In a webhook notification, we send along all the data of the payment. In a
+redirect, we only send the payment ID of the transaction as a URL query-string
+parameter. The redirect is typically used in conjunction with the API (by
+making use of the payment ID as the key to poll the payment API with) while the
+webhook is often used independently.
+
+\subsubsection{What comes first, the redirect or the webhook?}
+The webhook request is asynchronous with the redirect. The redirect takes
+place on the user's browser while the webhook request is initiated from our
+server. Therefore, there is no guarantee that you will receive one before the
+other.
+
+\subsubsection{How do I test whether webhook notifications are working?}
+\label{subsubsec:webhook_testing}
+To check whether webhook requests are being sent from Instamojo's servers or to see what what data is being sent through the webhook request, you can use \url{requestb.in}. Simply create a new Requestb.in URL and paste the URL in the webhook URL field of your Instamojo link. 
+
+To view the data sent to the webhook URL, open the Requestb.in URL in your
+browser after adding \verb+?inspect+ to the URL. For instance, if the URL you
+enter in the webhook field is \verb+http://requestb.in/example+, you'll need to
+open \verb+http://requestb.in/example?inspect+ in your browser to view requests
+sent to this URL. Of course, to send data to this URL, simply make a
+transaction on the Instamojo link that you've set up with this Requestb.in URL.
+
+Remember that webhooks work with free links too, so you can create a link
+priced at Rs. 0 for testing purposes and it'll still work.
+
+\subsubsection{I'm not getting any webhook requests on my server}
+There are several reasons for which you may not be receiving any webhook requests.
+\begin{itemize}
+\item Webhooks requests are made though a deferred task queue, so they may not
+fire immediately as a payment happens. There may be a delay of a few seconds if
+our servers are under heavy task loads. You can read
+\ref{subsubsec:webhook_testing} to verify whether the webhook requests are
+being made from Instamojo's servers.
+\item Certain web servers block out requests made using non-browser query
+strings. You'll need to whitelist the user agent that Instamojo uses to send
+webhook requests if this is the case.
+\item Our webhook requests currently time out after 5 seconds, if no response
+is received from your server.
+\item You may not have configured your webhook receiver correctly. Read
+\ref{subsubsec:simulate} to see how to simulate a webhook request.
+\item Our webhook request need a publicly accessible URL to work. They won't
+work with localhost URLs and local IP address ranges.
+\end{itemize}
+
+\subsubsection{How do I verify that Instamojo is sending me the webhook request}
+Every webhook request includes a field named \verb+mac+, which is the message
+authentication code. This code is generated using the content of the message
+and a secret salt that is accessible only to you and to Instamojo. You should
+check every webhook request against the message authentication code included
+and verify that it is the same as the code that you are able to generate using
+the content of the message and your salt\footnote{You'll find your salt here
+once you log into your Instamojo account: \\
+\url{https://www.instamojo.com/developers/}}.
+
+The procedure for calculating the webhook MAC is similar to the procedure
+described in section \ref{subsec:tamper_proof}. Simply use all the fields of
+the message except the \verb+mac+ field itself for generating the message
+authentication code and verify it against the one you've received\footnote{The
+procedure is described in detail here: \\
+\url{http://support.instamojo.com/support/solutions/articles/139575-what-is-the-message-authentication-code-in}}.
+
+\subsubsection{Should I use the webhook or the API?}
+
+To decide whether you should use the webhook or the API, you'll need to keep in
+mind that webhooks are asynchronous and deferred.
+
+\begin{itemize}
+\item If you need the transaction details immediately after redirecting the
+buyer to your site, then you'll need to use the API.
+\item If you need to show a custom page to the buyer after the payment that
+depends on the transaction details, then you'll need to use the API.
+\item If you only need to update your database or send an email to the buyer
+after a transaction, then you can use the webhook.
+\end{itemize}
+
+\subsubsection{Can you provide a way to simulate a webhook request?}
+\label{subsubsec:simulate}
+
+In order to simulate a webhook request by yourself for testing or debugging purposes, you can issue the following curl request:
+
+\begin{flushleft}
+\verb+curl --data "param1=val1&param2=val2" http://your-webhook-url.com/endpoint/+
+\end{flushleft}
+
+\newpage
+\section{Instamojo APIs}
+
+Instamojo primarily provides the two following REST APIs- the Payment API and
+the Link API. To use either of these APIs, you'll need a private API key and
+auth token. You can view these credentials by logging into your Instamojo
+account and then visiting \url{https://www.instamojo.com/developers/}.
+
+Documentation for the Instamojo APIs is provided at
+\url{https://www.instamojo.com/developers/rest/}. A summary is provided below.
+
+\subsection{Payment API}
+\label{subsec:payment_api}
+This API can be used to retrieve all the details of a specific payment or a
+list of payments made to your Instamojo account. This is typically used at the
+end of a payment to verify the status of a payment. You can retrieve a payment
+ID from a redirected URL as described in section \ref{subsec:redirect} on page
+\pageref{subsec:redirect}.
+
+\uline{Note}: You must verify the status of every payment using the API or by
+logging into your Instamojo account if you're using a redirect based workflow
+to check whether a payment is successful or not.
+
+\subsection{Link API}
+\label{subsec:link_api}
+This API can be used to create and edit links in your Instamojo account. This
+is typically used when you need to  upload a large number of products to your
+Instamojo account.
+
+If you have any questions on which API you should use, please don't hesitate to
+reach out to the Instamojo team.
+
+% \section{Use cases}
+
+\newpage
+\section{Tools and libraries}
+\label{sec:tools}
+
+\begin{description}
+\item [Python API wrapper]
+
+This is an implementation of the Instamojo REST API in Python.
+
+    \url{https://github.com/Instamojo/instamojo-py}
+
+\item [PHP API wrapper]
+
+This is an implementation of the Instamojo REST API in PHP.
+
+    \url{https://github.com/Instamojo/instamojo-php}
+
+\item [Prestashop plugin]
+
+If you use Prestashop for your shopping cart needs, then this plugin allows you to set up Instamojo for checkout.
+
+    \url{https://github.com/Instamojo/instamojo-prestashop}
+
+\item [Wordpress plugin]
+
+This is a sample Wordpress plugin and can be used to showcase your Instamojo
+links on Wordpress.
+
+    \url{https://github.com/Instamojo/instamojo-wordpress-plugin}
+
+\item [IM Tools]
+
+This repository contains a few useful Instamojo tools- such as a sample Webhook
+receiver and a command line tool to generate pre-filled and signed links on
+Instamojo. To use the link tool, simply download the Python file to your computer, open a command line shell and execute the following command for a tutorial on how to use the tool:
+
+\verb+python link.py -h+
+
+\url{https://github.com/Instamojo/instamojo-wordpress-plugin}
+\end{description}
+
+\end{document}
