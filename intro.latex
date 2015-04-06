@@ -3,11 +3,12 @@
             urlcolor=blue]{hyperref}
 \usepackage{graphics}
 \usepackage[normalem]{ulem}
+\usepackage{datetime}
 \setlength{\parskip}{5pt plus 1pt minus 1pt}
 \ifpdf
 \pdfinfo{
          /Title (Integrating Instamojo)
-         /CreationDate (D:20141111183000)
+         /CreationDate (D:\pdfdate)
          /Subject (Instamojo)
     }
 \fi
