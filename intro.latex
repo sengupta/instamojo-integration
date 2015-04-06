@@ -651,4 +651,23 @@ Instamojo. To use the link tool, simply download the Python file to your compute
 \url{https://github.com/Instamojo/instamojo-wordpress-plugin}
 \end{description}
 
+
+\newpage
+\section{Change Log}
+\label{sec:changelog}
+
+\begin{description}
+\item [Version 1.1: \date{November 11, 2014}]
+The first version of this document was released.
+
+\item [Version 1.2: \date{April 6, 2014}]
+\begin{enumerate}
+\item Updated the support phone number.
+\item Fixed an incorrect URL in an example.
+\item Added a cautionary note for aforementioned example.
+\item Added this change log.
+\end{enumerate}
+
+\end{description}
+
 \end{document}
