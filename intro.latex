@@ -657,10 +657,12 @@ Instamojo. To use the link tool, simply download the Python file to your compute
 \label{sec:changelog}
 
 \begin{description}
-\item [Version 1.1: \date{November 11, 2014}]
+\item [Version 1.1: \date{November 11, 2014}] \hfill \\
+
 The first version of this document was released.
 
-\item [Version 1.2: \date{April 6, 2014}]
+\item [Version 1.2: \date{April 6, 2014}] \hfill \\
+
 \begin{enumerate}
 \item Updated the support phone number.
 \item Fixed an incorrect URL in an example.
