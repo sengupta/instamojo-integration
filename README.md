@@ -445,6 +445,27 @@ This repository contains a few useful Instamojo tools- such as a sample Webhook 
 
 <https://github.com/Instamojo/instamojo-wordpress-plugin>
 
+Change Log
+==========
+
+[Version 1.1:
+
+]
+
+The first version of this document was released.
+
+[Version 1.2:
+
+]
+
+1.  Updated the support phone number.
+
+2.  Fixed an incorrect URL in an example.
+
+3.  Added a cautionary note for aforementioned example.
+
+4.  Added this change log and document version number.
+
 [1] Not all features of Markdown are supported. In particularly, any HTML or Javascript added will be removed
 
 [2] Syntax: <http://daringfireball.net/projects/markdown/syntax>

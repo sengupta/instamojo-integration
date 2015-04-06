@@ -13,6 +13,7 @@
     }
 \fi
 \title{Integrating Instamojo}
+\date{\today \\Version 1.2}
 \hyphenation{Instamojo}
 
 \begin{document}
@@ -667,7 +668,7 @@ The first version of this document was released.
 \item Updated the support phone number.
 \item Fixed an incorrect URL in an example.
 \item Added a cautionary note for aforementioned example.
-\item Added this change log.
+\item Added this change log and document version number.
 \end{enumerate}
 
 \end{description}
